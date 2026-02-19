@@ -8,6 +8,7 @@ list. Individual items are appended to each project as smaller cards/list items.
     - Due date
     - Priority
     - Assigned to a project
+- Need forms for creating new projects and project list items
 
 - Objects/classes:
     - ToDoManager:
@@ -43,3 +44,28 @@ list. Individual items are appended to each project as smaller cards/list items.
         helper functions)
         - Forms triggering for creation/modification of projects/items
         - Event listeners for project/item creation and deletion (buttons?)
+
+- ToDoProject HTML Layout:
+    - div.project (ToDoProject)
+        - div.project-title
+        - div.project-desc
+        - div.project-settings
+            - button.project-modify (change title/desc)
+            - button.project-delete (delete this project)
+            - button.add-item (adds ToDoItem to this project)
+        - ul.item-list
+            - li.item (ToDoItem)
+            - li.item (ToDoItem)
+            - li.item (ToDoItem)
+            ...
+
+- ToDoItem HTML Layout:
+    - li.item (ToDoItem)
+        - div.item-title
+        - div.item-desc
+        - div.item-date
+        - div.item-priority
+        - input[type="checkbox"].item-completed
+        - div.item-settings
+            - button.item-modify (change title/desc/dueDate/priority)
+            - button.item-delete (delete this item)
