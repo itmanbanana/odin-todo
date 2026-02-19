@@ -6,5 +6,6 @@
     devtool: "eval-source-map",
     devServer: {
         watchFiles: ["./src/index.html"],
+        port: 3000,
     },
  });
