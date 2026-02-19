@@ -34,6 +34,7 @@ list. Individual items are appended to each project as smaller cards/list items.
             - Description
             - Due date
             - Priority
+            - Completed (boolean) - checkbox
         - Self deletion via ToDoProject
         - Self modification via ToDoProject
     - DisplayManager:
