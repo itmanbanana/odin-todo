@@ -1,0 +1,44 @@
+To-Do App Brainstorming:
+
+- To-do project exist as cards that are appended to the end of a main project
+list. Individual items are appended to each project as smaller cards/list items.
+- Each to-do item card has the following properties:
+    - Title
+    - Description (limit characters?)
+    - Due date
+    - Priority
+    - Assigned to a project
+
+- Objects/classes:
+    - ToDoManager:
+        - Properties:
+            - List of ToDoProject objects
+        - Create new ToDoProject
+        - Delete project (exposed as public to be called by ToDoProject)
+        - Modify ToDoProject(title, desc)
+    - ToDoProject:
+        - Properties:
+            - Title (name)
+            - Description
+            - List of ToDoItem objects
+        - Self deletion via ToDoManager
+        - Self modification via ToDoManager
+        - Create new ToDoItem (to go under self)
+        - Delete ToDoItem (exposed as public to be called by ToDoItem)
+        - Modify ToDoItem(title, desc, duedate, priority)
+            - Reassign ToDoItem to new passed params
+    - ToDoItem:
+        - Properties:
+            - Project assigned => reference to ToDoProject
+            - Title
+            - Description
+            - Due date
+            - Priority
+        - Self deletion via ToDoProject
+        - Self modification via ToDoProject
+    - DisplayManager:
+        - Update display: iterates through all ToDoProject and respective
+        ToDoItem objects in ToDoManager for DOM modification (may require
+        helper functions)
+        - Forms triggering for creation/modification of projects/items
+        - Event listeners for project/item creation and deletion (buttons?)
