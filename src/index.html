@@ -6,11 +6,27 @@
     <title>Odin To-Do</title>
 </head>
 <body>
-    <header>
-        <div class="header-title">Odin To-Do</div>
-        <button class="add-project-button">Add Project</button>
-    </header>
-    <div class="content"></div>
+    <div>
+        <header>
+            <div class="header-title">Odin To-Do</div>
+            <button class="add-project-button">Add Project</button>
+        </header>
+        <div class="content">
+            <form action="." class="project-form">
+                <div class="form-field">
+                    <label for="project-title">Title:</label>
+                    <input type="text" id="project-title" name="project-title">
+                </div>
+                <div class="form-field">
+                    <label for="project-description">Description:</label>
+                    <textarea name="project-description" 
+                    id="project-description" 
+                    rows="10" cols="50" maxlength="500"></textarea>
+                </div>
+                <button type="submit" class="submit-project-button">Submit</button>
+            </form>
+        </div>
+    </div>
     <footer>
         <div class="footer-title">Made by itmanbanana 2026</div>
     </footer>

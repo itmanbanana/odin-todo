@@ -28,6 +28,11 @@ header {
 
 form {
     background-color: lightgrey;
+    visibility: hidden;
+}
+
+form.open {
+    visibility: visible;
 }
 
 .header-title {
