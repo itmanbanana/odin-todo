@@ -1,6 +1,6 @@
 import { ToDoManager } from "./todo_manager.js";
 const DisplayManager = (() => {
-    const content = document.querySelector(".content");
+    const projectContainerDiv = document.querySelector(".project-container");
     const projectTitle = document.querySelector("#project-title");
     const projectDescription = document.querySelector("#project-description");
     const addProjectButton = document.querySelector(".add-project-button");
@@ -17,22 +17,31 @@ const DisplayManager = (() => {
         closeForm(addProjectForm);
     });
     const addProjectForm = document.querySelector(".project-form");
-    const updateToDoManagerDisplay = () => {
+    const updateToDoProjectDisplay = () => {
+        projectContainerDiv.innerHTML = "";
+        ToDoManager.getProjectList().forEach((project) => {
+            let projectDiv = document.createElement("div");
+            projectDiv.classList.add("project");
+            let projectTitleDiv = document.createElement("div");
+            let projectDescDiv = document.createElement("div");
+            let projectItemsList = document.createElement("ul");
+            let projectDeleteButton = document.createElement("button");
+            projectDeleteButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                ToDoManager.deleteToDoProject(project);
+                updateToDoProjectDisplay();
+            });
+            projectTitleDiv.textContent = project.title;
+            projectDescDiv.textContent = project.desc;
+            projectDeleteButton.textContent = "Delete Project";
+            projectDiv.appendChild(projectTitleDiv);
+            projectDiv.appendChild(projectDescDiv);
+            projectDiv.appendChild(projectItemsList);
+            projectDiv.appendChild(projectDeleteButton);
+            projectContainerDiv.appendChild(projectDiv);
+        });
     };
-    const updateToDoProjectDisplay = (project) => {
-        const projectDiv = document.createElement("div");
-        projectDiv.classList.add("project");
-        const projectTitleDiv = document.createElement("div");
-        const projectDescDiv = document.createElement("div");
-        const projectItemsList = document.createElement("ul");
-        projectTitleDiv.textContent = project.title;
-        projectDescDiv.textContent = project.desc;
-        projectDiv.appendChild(projectTitleDiv);
-        projectDiv.appendChild(projectDescDiv);
-        projectDiv.appendChild(projectItemsList);
-        content.appendChild(projectDiv);
-    };
-    const updateToDoItemDisplay = (item) => {
+    const updateToDoItemDisplay = (project) => {
     };
     const openForm = (form) => {
         if (!form.classList.contains("open"))
@@ -43,7 +52,6 @@ const DisplayManager = (() => {
             form.classList.remove("open");
     };
     return {
-        updateToDoManagerDisplay,
         updateToDoProjectDisplay,
         updateToDoItemDisplay
     };

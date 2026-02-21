@@ -9,8 +9,8 @@ const ToDoManager = (() => {
     const addToDoProject = (projectTitle: string, projectDesc: string) => {
         let project = new ToDoProject(projectTitle, projectDesc);
         projectList.push(project);
-        
-        DisplayManager.updateToDoProjectDisplay(project);
+
+        DisplayManager.updateToDoProjectDisplay();
     };
 
     const deleteToDoProject = (project: ToDoProject) => {

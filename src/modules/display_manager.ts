@@ -3,7 +3,7 @@ import type { ToDoItem } from "./todo_item.js";
 import type { ToDoProject } from "./todo_project.js";
 
 const DisplayManager = (() => {
-    const content: HTMLDivElement = document.querySelector(".content") as HTMLDivElement;
+    const projectContainerDiv: HTMLDivElement = document.querySelector(".project-container") as HTMLDivElement;
 
     const projectTitle: HTMLInputElement = document.querySelector("#project-title") as HTMLInputElement;
     const projectDescription: HTMLTextAreaElement = document.querySelector("#project-description") as HTMLTextAreaElement;
@@ -26,29 +26,38 @@ const DisplayManager = (() => {
 
     const addProjectForm: HTMLFormElement = document.querySelector(".project-form") as HTMLFormElement;
 
-    const updateToDoManagerDisplay = () => {
+    const updateToDoProjectDisplay = () => {
+        projectContainerDiv.innerHTML = "";
+        ToDoManager.getProjectList().forEach((project) => {
+            let projectDiv: HTMLDivElement = document.createElement("div");
+            
+            projectDiv.classList.add("project");
 
+            let projectTitleDiv: HTMLDivElement = document.createElement("div");
+            let projectDescDiv: HTMLDivElement = document.createElement("div");
+            let projectItemsList: HTMLUListElement = document.createElement("ul");
+            let projectDeleteButton: HTMLButtonElement = document.createElement("button");
+            
+            projectDeleteButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                ToDoManager.deleteToDoProject(project);
+                updateToDoProjectDisplay();
+            });
+
+            projectTitleDiv.textContent = project.title;
+            projectDescDiv.textContent = project.desc;
+            projectDeleteButton.textContent = "Delete Project";
+
+            projectDiv.appendChild(projectTitleDiv);
+            projectDiv.appendChild(projectDescDiv);
+            projectDiv.appendChild(projectItemsList);
+            projectDiv.appendChild(projectDeleteButton);
+
+            projectContainerDiv.appendChild(projectDiv);
+        });
     };
-
-    const updateToDoProjectDisplay = (project: ToDoProject) => {
-        const projectDiv: HTMLDivElement = document.createElement("div");
-        projectDiv.classList.add("project");
-
-        const projectTitleDiv: HTMLDivElement = document.createElement("div");
-        const projectDescDiv: HTMLDivElement = document.createElement("div");
-        const projectItemsList: HTMLUListElement = document.createElement("ul");
     
-        projectTitleDiv.textContent = project.title;
-        projectDescDiv.textContent = project.desc;
-
-        projectDiv.appendChild(projectTitleDiv);
-        projectDiv.appendChild(projectDescDiv);
-        projectDiv.appendChild(projectItemsList);
-
-        content.appendChild(projectDiv);
-    };
-    
-    const updateToDoItemDisplay = (item: ToDoItem) => {
+    const updateToDoItemDisplay = (project: ToDoProject) => {
 
     };
 
@@ -61,7 +70,6 @@ const DisplayManager = (() => {
     };
 
     return { 
-        updateToDoManagerDisplay, 
         updateToDoProjectDisplay,
         updateToDoItemDisplay
     }
