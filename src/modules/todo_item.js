@@ -5,7 +5,7 @@ class ToDoItem {
     _dueDate;
     _priority;
     _completed;
-    constructor(project, title, dueDate, priority, completed = false) {
+    constructor(project, title = "List item", dueDate = "2026-01-01", priority = "medium", completed = false) {
         this._project = project;
         this._title = title;
         this._dueDate = dueDate;

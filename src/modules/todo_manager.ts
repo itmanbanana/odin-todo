@@ -6,7 +6,7 @@ const ToDoManager = (() => {
 
     const getProjectList = () => projectList;
     
-    const addToDoProject = (projectTitle: string, projectDesc: string) => {
+    const addToDoProject = (projectTitle: string = "", projectDesc: string = "") => {
         let project = new ToDoProject(projectTitle, projectDesc);
         projectList.push(project);
 

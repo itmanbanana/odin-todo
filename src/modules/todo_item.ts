@@ -5,11 +5,11 @@ export type Priority = "high" | "medium" | "low";
 class ToDoItem {
     _project: ToDoProject;
     _title: string;
-    _dueDate: Date;
+    _dueDate: string;
     _priority: Priority;
     _completed: boolean;
 
-    constructor(project: ToDoProject, title: string, dueDate: Date, priority: Priority, completed: boolean = false) {
+    constructor(project: ToDoProject, title: string = "List item", dueDate: string = "2026-01-01", priority: Priority = "medium", completed: boolean = false) {
         this._project = project;
         this._title = title;
         this._dueDate = dueDate;
@@ -22,8 +22,8 @@ class ToDoItem {
     get title(): string { return this._title; }
     set title(newTitle: string) { this._title = newTitle; }
     
-    get dueDate(): Date { return this._dueDate }
-    set dueDate(newDueDate: Date) { this._dueDate = newDueDate }
+    get dueDate(): string { return this._dueDate }
+    set dueDate(newDueDate: string) { this._dueDate = newDueDate }
 
     get priority(): Priority { return this._priority; }
     set priority(newPriority: Priority) { this._priority = newPriority; }

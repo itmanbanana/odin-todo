@@ -1,11 +1,12 @@
-import { ToDoItem } from "./todo_item.js";
+import { ToDoItem, type Priority } from "./todo_item.js";
 declare class ToDoProject {
     _id: string;
     _title: string;
     _desc: string;
-    _itemList: ToDoItem[];
-    constructor(title: string, desc: string);
-    addToDoItem(item: ToDoItem): void;
+    _itemList: Array<ToDoItem>;
+    constructor(title?: string, desc?: string);
+    addToDoItem(title?: string, dueDate?: string, priority?: Priority): void;
+    removeToDoItem(item: ToDoItem): void;
     get itemList(): ToDoItem[];
     get id(): string;
     get title(): string;

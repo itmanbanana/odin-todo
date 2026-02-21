@@ -3,7 +3,7 @@ import { ToDoProject } from "./todo_project.js";
 const ToDoManager = (() => {
     let projectList = [];
     const getProjectList = () => projectList;
-    const addToDoProject = (projectTitle, projectDesc) => {
+    const addToDoProject = (projectTitle = "", projectDesc = "") => {
         let project = new ToDoProject(projectTitle, projectDesc);
         projectList.push(project);
         DisplayManager.updateToDoProjectDisplay();

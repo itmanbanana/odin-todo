@@ -1,16 +1,26 @@
+import { DisplayManager } from "./display_manager.js";
 import { ToDoItem } from "./todo_item.js";
 class ToDoProject {
     _id;
     _title;
     _desc;
     _itemList = [];
-    constructor(title, desc) {
+    constructor(title = "", desc = "") {
         this._id = crypto.randomUUID();
+        console.log(this._id);
         this._title = title;
         this._desc = desc;
     }
-    addToDoItem(item) {
-        this._itemList.push(item);
+    addToDoItem(title, dueDate, priority) {
+        this._itemList.push(new ToDoItem(this, title, dueDate, priority, false));
+        DisplayManager.updateToDoItemDisplay(this);
+    }
+    removeToDoItem(item) {
+        if (this._itemList.includes(item)) {
+            let index = this._itemList.indexOf(item);
+            this._itemList.splice(index, 1);
+            DisplayManager.updateToDoItemDisplay(this);
+        }
     }
     get itemList() { return this._itemList; }
     get id() { return this._id; }
