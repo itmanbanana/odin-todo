@@ -13,6 +13,7 @@ const DisplayManager = (() => {
         e.preventDefault();
         openForm(addProjectForm);
     });
+
     const submitProjectButton: HTMLButtonElement = document.querySelector(".submit-project-button") as HTMLButtonElement;
     submitProjectButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -32,12 +33,19 @@ const DisplayManager = (() => {
             let projectDiv: HTMLDivElement = document.createElement("div");
             
             projectDiv.classList.add("project");
+            projectDiv.dataset.id = project.id;
 
             let projectTitleDiv: HTMLDivElement = document.createElement("div");
             let projectDescDiv: HTMLDivElement = document.createElement("div");
             let projectItemsList: HTMLUListElement = document.createElement("ul");
+            let projectAddItemButton: HTMLButtonElement = document.createElement("button");
             let projectDeleteButton: HTMLButtonElement = document.createElement("button");
             
+            projectAddItemButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                // do something with add item form
+            });
+
             projectDeleteButton.addEventListener("click", (e) => {
                 e.preventDefault();
                 ToDoManager.deleteToDoProject(project);
@@ -46,11 +54,13 @@ const DisplayManager = (() => {
 
             projectTitleDiv.textContent = project.title;
             projectDescDiv.textContent = project.desc;
+            projectAddItemButton.textContent = "Add Item";
             projectDeleteButton.textContent = "Delete Project";
 
             projectDiv.appendChild(projectTitleDiv);
             projectDiv.appendChild(projectDescDiv);
             projectDiv.appendChild(projectItemsList);
+            projectDiv.appendChild(projectAddItemButton);
             projectDiv.appendChild(projectDeleteButton);
 
             projectContainerDiv.appendChild(projectDiv);
