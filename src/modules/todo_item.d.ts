@@ -1,13 +1,12 @@
-import { ToDoProject } from "./todo_project.js";
 export type Priority = "high" | "medium" | "low";
 declare class ToDoItem {
-    _project: ToDoProject;
+    _projectID: string;
     _title: string;
     _dueDate: string;
     _priority: Priority;
     _completed: boolean;
-    constructor(project: ToDoProject, title?: string, dueDate?: string, priority?: Priority, completed?: boolean);
-    get project(): ToDoProject;
+    constructor(projectID: string, title?: string, dueDate?: string, priority?: Priority, completed?: boolean);
+    get projectID(): string;
     get title(): string;
     set title(newTitle: string);
     get dueDate(): string;

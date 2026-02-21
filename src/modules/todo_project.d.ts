@@ -4,10 +4,11 @@ declare class ToDoProject {
     _title: string;
     _desc: string;
     _itemList: Array<ToDoItem>;
-    constructor(title?: string, desc?: string);
-    addToDoItem(title?: string, dueDate?: string, priority?: Priority): void;
+    constructor(title?: string, desc?: string, id?: string);
+    addToDoItem(title?: string, dueDate?: string, priority?: Priority, completed?: boolean): void;
     removeToDoItem(item: ToDoItem): void;
     get itemList(): ToDoItem[];
+    set itemList(list: ToDoItem[]);
     get id(): string;
     get title(): string;
     set title(newTitle: string);
