@@ -1,3 +1,4 @@
+import * as cssFont from "./styles/iosevka.css";
 import * as css from "./styles/style.css";
 import { ToDoItem } from "./modules/todo_item.js";
 import { ToDoManager } from "./modules/todo_manager.js";

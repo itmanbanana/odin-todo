@@ -27,34 +27,246 @@ body {
     min-height: 100vh;
 }
 
+.effect {
+    position: absolute;
+    background-color: black;
+    opacity: 0;
+}
+
+.effect.open {
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    opacity: 0.3;
+}
+
 header {
     margin: 2rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    gap: 1rem;
 }
 
 form {
-    background-color: lightgrey;
+    z-index: 2;
+
+    font-size: 1.25rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    background-color: var(--col-light-green);
     visibility: hidden;
+
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 2rem;
+    border: 0.25rem solid var(--col-med-green);
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 0 var(--col-med-green);
 }
 
 form.open {
+    filter: blur(0);
     visibility: visible;
 }
 
 button {
     border: none;
     outline: none;
+    font-family: inherit;
+    font-size: inherit;
     background: none;
-
-    font-size: 1.5rem;
 
     background-color: var(--col-light-green);
 }
 
+input, select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+.add-project-button {
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    padding: 0.5rem 2rem;
+    border-radius: 1rem;
+
+    border: 0.125rem solid var(--col-med-green);
+    box-shadow: 0 0.5rem 0 var(--col-med-green);
+}
+
+.add-project-button:hover {
+    box-shadow: none;
+    transform: translateY(0.5rem);
+}
+
+.submit-project-button,
+.cancel-project-button,
+.project-delete-button,
+.project-add-item-button {
+    padding: 0.25rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+
+    border: 0.125rem solid var(--col-med-green);
+    box-shadow: 0 0.25rem 0 var(--col-med-green);
+}
+
+.submit-project-button:hover,
+.cancel-project-button:hover,
+.project-delete-button:hover,
+.project-add-item-button:hover {
+    box-shadow: none;
+    transform: translateY(0.25rem);
+} 
+
 .header-title {
     font-size: 3rem;
     font-weight: 600;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+input[type="text"] {
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+
+    background-color: var(--col-light);
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: 0.125rem solid var(--col-dark-green);
+}
+
+textarea {
+    font-family: inherit;
+
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+
+    background-color: var(--col-light);
+    border: none;
+    outline: none;
+}
+
+.project-container {
+    margin-top: 3rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.project {
+    padding: 2rem;
+    border: 0.25rem solid var(--col-med-green);
+    border-radius: 1rem;
+
+    width: clamp(40ch, 50vw, 80ch);
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.project-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.project-desc {
+    font-size: 1.25rem;
+}
+
+.project-add-item-button {
+    width: fit-content;
+}
+
+.project-items-list {
+    margin: 1.5rem 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-item-container {
+    font-size: 1rem;
+
+    padding: 1rem;
+    border: 0.125rem solid var(--col-med-green);
+    border-radius: 1rem;
+
+    display: grid;
+    grid-template: repeat(2, 1fr) / 2fr 2fr 4fr 1fr;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+input#item-title {
+    grid-column: 1 / 4;
+    font-size: 1rem;
+}
+
+label.item-date-label {
+    padding: 0 0.5rem;
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+}
+
+label.item-priority-label  {
+    padding: 0 0.5rem;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+input#item-date, select {
+    border: 0.0625rem solid var(--col-dark-green);
+    border-radius: 0.25rem;
+    background-color: var(--col-light);
+}
+
+input#item-completed {
+    grid-column: 4 / 5;
+
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 0.125rem solid var(--col-dark-green);
+    border-radius: 0.25rem;
+}
+
+.item-delete-button {
+    grid-row: 2 / 3;
+    grid-column: 4 / 5;
+
+    background-image: url("/src/images/trashcan.svg");
+    background-repeat: no-repeat;
+    background-color: var(--col-light);
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.item-delete-button:hover {
+    cursor: pointer;
 }

@@ -9,14 +9,14 @@
     <div>
         <header>
             <div class="header-title">Odin To-Do</div>
-            <button class="add-project-button">Add Project</button>
+            <button class="add-project-button">+ Add Project</button>
         </header>
         <div class="content">
             <div class="project-container"></div>
             <form action="." class="project-form">
                 <div class="form-field">
                     <label for="project-title">Title:</label>
-                    <input type="text" id="project-title" name="project-title">
+                    <input type="text" id="project-title" name="project-title" maxlength="50" minlength="1">
                 </div>
                 <div class="form-field">
                     <label for="project-description">Description:</label>
@@ -24,31 +24,16 @@
                     id="project-description" 
                     rows="10" cols="50" maxlength="500"></textarea>
                 </div>
-                <button type="submit" class="submit-project-button">Submit</button>
-                <button class="cancel-project-button">Cancel</button>
+                <div class="form-buttons">
+                    <button type="submit" class="submit-project-button">Create Project</button>
+                    <button class="cancel-project-button">Cancel</button>
+                </div>
             </form>
-            <!-- <form action="." class="item-form">
-                <div class="form-field">
-                    <label for="item-title">Title:</label>
-                    <input type="text" id="item-title" name="item-title">
-                </div>
-                <div class="form-field">
-                    <label for="item-date">Due date:</label>
-                    <input type="date" id="item-date" name="item-date">
-                </div>
-                <div class="form-field">
-                    <select name="item-priority" id="item-priority">
-                        <option value="item-priority-high">High</option>
-                        <option value="item-priority-medium">Medium</option>
-                        <option value="item-priority-low">Low</option>
-                    </select>
-                </div>
-                <button type="submit" class="submit-item-button">Submit</button>
-            </form> -->
         </div>
     </div>
     <footer>
         <div class="footer-title">Made by itmanbanana 2026</div>
     </footer>
+    <div class="effect"></div>
 </body>
 </html>

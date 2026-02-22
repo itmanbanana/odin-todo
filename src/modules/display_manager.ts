@@ -3,6 +3,8 @@ import type { Priority, ToDoItem } from "./todo_item.js";
 import type { ToDoProject } from "./todo_project.js";
 
 const DisplayManager = (() => {
+    const effectElement: HTMLDivElement = document.querySelector("div.effect") as HTMLDivElement;
+    
     const projectContainerDiv: HTMLDivElement = document.querySelector(".project-container") as HTMLDivElement;
 
     const projectTitle: HTMLInputElement = document.querySelector("#project-title") as HTMLInputElement;
@@ -46,11 +48,18 @@ const DisplayManager = (() => {
             projectDiv.classList.add("project");
 
             let projectTitleDiv: HTMLDivElement = document.createElement("div");
+            projectTitleDiv.classList.add("project-title");
             let projectDescDiv: HTMLDivElement = document.createElement("div");
+            projectDescDiv.classList.add("project-desc");
             let projectItemsList: HTMLUListElement = document.createElement("ul");
-            let projectAddItemButton: HTMLButtonElement = document.createElement("button");
-            let projectDeleteButton: HTMLButtonElement = document.createElement("button");
+            projectItemsList.classList.add("project-items-list");
+            let projectSettingsDiv: HTMLDivElement = document.createElement("div");
             
+            let projectAddItemButton: HTMLButtonElement = document.createElement("button");
+            projectAddItemButton.classList.add("project-add-item-button");
+            let projectDeleteButton: HTMLButtonElement = document.createElement("button");
+            projectDeleteButton.classList.add("project-delete-button");
+
             projectItemsList.dataset.id = project.id;
 
             projectAddItemButton.addEventListener("click", (e) => {
@@ -72,7 +81,8 @@ const DisplayManager = (() => {
 
             projectDiv.appendChild(projectTitleDiv);
             projectDiv.appendChild(projectDescDiv);
-            projectDiv.appendChild(projectDeleteButton);
+            projectSettingsDiv.appendChild(projectDeleteButton);
+            projectDiv.appendChild(projectSettingsDiv);
             projectDiv.appendChild(projectItemsList);
             projectDiv.appendChild(projectAddItemButton);
 
@@ -86,17 +96,23 @@ const DisplayManager = (() => {
         itemListElement.innerHTML = "";
 
         project.itemList.forEach((item) => {
-            let itemDivElement: HTMLDivElement = document.createElement("div");
+            let itemDivElement: HTMLLIElement = document.createElement("li");
+            itemDivElement.classList.add("project-item-container");
 
             let itemTitleElement: HTMLInputElement = document.createElement("input");
             itemTitleElement.type = "text";
+            itemTitleElement.id = "item-title";
             itemTitleElement.addEventListener("input", (e) => {
                 e.preventDefault();
                 item.title = itemTitleElement.value;
             });
 
             let itemDueDateElement: HTMLInputElement = document.createElement("input");
+            let itemDueDateLabelElement: HTMLLabelElement = document.createElement("label");
             itemDueDateElement.type = "date";
+            itemDueDateElement.id = "item-date";
+            itemDueDateLabelElement.classList.add("item-date-label");
+            itemDueDateLabelElement.textContent = "Due Date:";
             itemDueDateElement.addEventListener("input", (e) => {
                 e.preventDefault();
                 console.log(itemDueDateElement.value)
@@ -105,15 +121,19 @@ const DisplayManager = (() => {
             });
             
             let itemPriorityElement: HTMLSelectElement = document.createElement("select");
+            let itemPriorityLabelElement: HTMLLabelElement = document.createElement("label");
             itemPriorityElement.innerHTML = `
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
+                <option value="high">⬆ High</option>
+                <option value="medium">― Medium</option>
+                <option value="low">⬇ Low</option>
             `;
             itemPriorityElement.addEventListener("input", (e) => {
                 e.preventDefault();
                 item.priority = itemPriorityElement.value as Priority;
             });
+            itemPriorityElement.id = "item-priority";
+            itemPriorityLabelElement.classList.add("item-priority-label");
+            itemPriorityLabelElement.textContent = "Priority:";
 
             let itemCompletedElement: HTMLInputElement = document.createElement("input");
             itemCompletedElement.type = "checkbox";
@@ -121,22 +141,26 @@ const DisplayManager = (() => {
                 e.preventDefault();
                 item.completed = itemCompletedElement.checked;
             });
+            itemCompletedElement.id = "item-completed";
             
             let itemDeleteButton: HTMLButtonElement = document.createElement("button");
             itemDeleteButton.addEventListener("click", (e) => {
                 e.preventDefault();
                 project.removeToDoItem(item);
             });
+            itemDeleteButton.classList.add("item-delete-button");
 
             itemTitleElement.value = item.title;
             itemDueDateElement.value = item.dueDate;
             itemPriorityElement.value = item.priority;
             itemCompletedElement.checked = item.completed;
-            itemDeleteButton.textContent = "Delete item";
+            itemDeleteButton.textContent = "";
 
             itemDivElement.appendChild(itemTitleElement);
-            itemDivElement.appendChild(itemDueDateElement);
-            itemDivElement.appendChild(itemPriorityElement);
+            itemDueDateLabelElement.appendChild(itemDueDateElement);
+            itemDivElement.appendChild(itemDueDateLabelElement);
+            itemPriorityLabelElement.appendChild(itemPriorityElement);
+            itemDivElement.appendChild(itemPriorityLabelElement);
             itemDivElement.appendChild(itemCompletedElement);
             itemDivElement.appendChild(itemDeleteButton);
 
@@ -145,11 +169,17 @@ const DisplayManager = (() => {
     };
 
     const openForm = (form: HTMLFormElement) => {
-        if (!form.classList.contains("open")) form.classList.add("open");
+        if (!form.classList.contains("open")) {
+            form.classList.add("open");
+            effectElement.classList.add("open");
+        }
     };
 
     const closeForm = (form: HTMLFormElement) => {
-        if (form.classList.contains("open")) form.classList.remove("open");
+        if (form.classList.contains("open")) {
+            form.classList.remove("open");
+            effectElement.classList.remove("open");
+        }
     };
 
     return { 
