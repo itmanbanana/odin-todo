@@ -7,6 +7,14 @@ const ToDoManager = (() => {
 
     const getProjectList = () => projectList;
     
+    const getProjectFromID = (id: string): ToDoProject | null => {
+        let projectRef = null;
+        projectList.forEach((project) => {
+            if (project.id === id) projectRef = project; return;
+        });
+        return projectRef;
+    };
+
     const addToDoProject = (projectTitle: string = "", projectDesc: string = "") => {
         let project = new ToDoProject(projectTitle, projectDesc);
         projectList.push(project);
@@ -51,6 +59,7 @@ const ToDoManager = (() => {
 
     return { 
         getProjectList, 
+        getProjectFromID,
         addToDoProject, 
         deleteToDoProject, 
         saveToDoContent, 

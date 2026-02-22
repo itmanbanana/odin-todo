@@ -4,6 +4,15 @@ import { ToDoItem } from "./todo_item.js";
 const ToDoManager = (() => {
     let projectList = [];
     const getProjectList = () => projectList;
+    const getProjectFromID = (id) => {
+        let projectRef = null;
+        projectList.forEach((project) => {
+            if (project.id === id)
+                projectRef = project;
+            return;
+        });
+        return projectRef;
+    };
     const addToDoProject = (projectTitle = "", projectDesc = "") => {
         let project = new ToDoProject(projectTitle, projectDesc);
         projectList.push(project);
@@ -41,6 +50,7 @@ const ToDoManager = (() => {
     };
     return {
         getProjectList,
+        getProjectFromID,
         addToDoProject,
         deleteToDoProject,
         saveToDoContent,

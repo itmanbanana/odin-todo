@@ -9,6 +9,15 @@ const DisplayManager = (() => {
 
     const projectTitle: HTMLInputElement = document.querySelector("#project-title") as HTMLInputElement;
     const projectDescription: HTMLTextAreaElement = document.querySelector("#project-description") as HTMLTextAreaElement;
+    const charsLeftSpan: HTMLSpanElement = document.querySelector("span.chars-left") as HTMLSpanElement;
+        
+    const updateChars = () => {
+        charsLeftSpan.innerHTML = `${500 - projectDescription.value.length}`;
+    }
+    
+    projectDescription.addEventListener("keydown", updateChars);
+    projectDescription.addEventListener("change", updateChars);
+
     const addProjectButton: HTMLButtonElement = document.querySelector(".add-project-button") as HTMLButtonElement;
     
     const projectForm: HTMLFormElement = document.querySelector(".project-form") as HTMLFormElement;
@@ -18,12 +27,23 @@ const DisplayManager = (() => {
         openForm(projectForm);
     });
 
-    // refactor later to clean up submit/cancel buttons
     const submitProjectButton: HTMLButtonElement = document.querySelector(".submit-project-button") as HTMLButtonElement;
     submitProjectButton.addEventListener("click", (e) => {
         e.preventDefault();
         
-        ToDoManager.addToDoProject(projectTitle.value, projectDescription.value);
+        // logic to handle editing project title/desc vs. adding new project
+        if (projectForm.classList.contains("edit")) {
+            let project: ToDoProject | null = ToDoManager.getProjectFromID(projectForm.id);
+            console.log(project);
+            if (project !== null) {
+                project.title = projectTitle.value;
+                project.desc = projectDescription.value;
+            }
+            projectForm.id = "";
+            ToDoManager.saveToDoContent();
+            updateToDoProjectDisplay();
+        } else ToDoManager.addToDoProject(projectTitle.value, projectDescription.value);
+        
         projectTitle.value = ""; 
         projectDescription.value = "";
         
@@ -54,9 +74,12 @@ const DisplayManager = (() => {
             let projectItemsList: HTMLUListElement = document.createElement("ul");
             projectItemsList.classList.add("project-items-list");
             let projectSettingsDiv: HTMLDivElement = document.createElement("div");
-            
+            projectSettingsDiv.classList.add("project-settings");
+
             let projectAddItemButton: HTMLButtonElement = document.createElement("button");
             projectAddItemButton.classList.add("project-add-item-button");
+            let projectEditButton: HTMLButtonElement = document.createElement("button");
+            projectEditButton.classList.add("project-edit-button");
             let projectDeleteButton: HTMLButtonElement = document.createElement("button");
             projectDeleteButton.classList.add("project-delete-button");
 
@@ -68,6 +91,11 @@ const DisplayManager = (() => {
                 project.addToDoItem("List item", `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`);
             });
 
+            projectEditButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                editForm(projectForm, project);
+            });
+
             projectDeleteButton.addEventListener("click", (e) => {
                 e.preventDefault();
                 ToDoManager.deleteToDoProject(project);
@@ -77,10 +105,12 @@ const DisplayManager = (() => {
             projectTitleDiv.textContent = project.title;
             projectDescDiv.textContent = project.desc;
             projectAddItemButton.textContent = "Add Item";
+            projectEditButton.textContent = "Edit Project";
             projectDeleteButton.textContent = "Delete Project";
 
             projectDiv.appendChild(projectTitleDiv);
             projectDiv.appendChild(projectDescDiv);
+            projectSettingsDiv.appendChild(projectEditButton);
             projectSettingsDiv.appendChild(projectDeleteButton);
             projectDiv.appendChild(projectSettingsDiv);
             projectDiv.appendChild(projectItemsList);
@@ -102,6 +132,7 @@ const DisplayManager = (() => {
             let itemTitleElement: HTMLInputElement = document.createElement("input");
             itemTitleElement.type = "text";
             itemTitleElement.id = "item-title";
+            itemTitleElement.maxLength = 40;
             itemTitleElement.addEventListener("input", (e) => {
                 e.preventDefault();
                 item.title = itemTitleElement.value;
@@ -175,9 +206,20 @@ const DisplayManager = (() => {
         }
     };
 
+    const editForm = (form: HTMLFormElement, project: ToDoProject) => {
+        if (!form.classList.contains("open")) {
+            form.classList.add("open", "edit");
+            form.id = project.id; // don't do this
+            effectElement.classList.add("open");
+
+            projectTitle.value = project.title;
+            projectDescription.value = project.desc;
+        }
+    }
+
     const closeForm = (form: HTMLFormElement) => {
         if (form.classList.contains("open")) {
-            form.classList.remove("open");
+            form.classList.remove("open", "edit");
             effectElement.classList.remove("open");
         }
     };
